@@ -24,14 +24,12 @@ exports.up = function (knex) {
 			table.string("story_summary", 300).notNullable();
 			table.boolean("sample_video").notNullable();
 			table.string("video_link").notNullable();
+			table.integer("user_id").notNullable().unsigned();
 			table
-				.integer("user_id")
-				.unsigned()
-				.notNullable()
+				.foreign("user_id")
 				.references("id")
 				.inTable("users")
-				.onUpdate("CASCADE")
-				.onDelete("CASCADE");
+				.onUpdate("CASCADE");
 			table.date("date_of_interview").notNullable();
 			table.timestamp("updated_at").defaultTo(knex.fn.now());
 		});
