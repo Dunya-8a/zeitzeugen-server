@@ -23,6 +23,19 @@ exports.singleVideo = (req, res) => {
 		);
 };
 
+exports.deleteVideo = (req, res) => {
+	knex("videos")
+		.delete()
+		.where({ video_id: req.params.id })
+		.then(() => {
+			// For DELETE response we can use 204 status code
+			res.status(204).send(`Video with id: ${req.params.id} has been deleted`);
+		})
+		.catch((err) =>
+			res.status(400).send(`Error deleting video ${req.params.id} ${err}`)
+		);
+};
+
 exports.addVideo = (req, res) => {
 	// Validate the request body for required data
 	if (
